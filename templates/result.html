@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>Prediction Result</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Prediction Result</h1>
+
+<div class="result-card">
+
+<h2>{{ prediction }}</h2>
+
+<br>
+
+<h3>Confidence</h3>
+
+<h2>{{ probability }}%</h2>
+
+<br>
+
+<h3 style="color:{{ color }}">
+
+{{ risk }} Risk
+
+</h3>
+
+<br>
+
+<p>
+
+{{ recommendation }}
+
+</p>
+
+<br>
+
+<a href="/">
+
+<button>
+
+Predict Another Employee
+
+</button>
+
+</a>
+
+</div>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Employee Attrition Prediction System</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Employee Attrition Prediction System</h1>
+
+    <p class="subtitle">
+        Predict whether an employee is likely to leave the organization using Machine Learning.
+    </p>
+
+    <!-- ================= Dashboard ================= -->
+
+    <div class="dashboard">
+
+        <div class="card">
+
+            <h2>{{ total_employees }}</h2>
+
+            <p>Total Employees</p>
+
+        </div>
+
+        <div class="card">
+
+            <h2>{{ attrition_rate }}%</h2>
+
+            <p>Attrition Rate</p>
+
+        </div>
+
+        <div class="card">
+
+            <h2>₹ {{ avg_income }}</h2>
+
+            <p>Average Income</p>
+
+        </div>
+
+        <div class="card">
+
+            <h2>{{ total_departments }}</h2>
+
+            <p>Departments</p>
+
+        </div>
+
+        <div class="card">
+
+            <h2>{{ avg_job_satisfaction }}</h2>
+
+            <p>Job Satisfaction</p>
+
+        </div>
+
+    </div>
+
+    <!-- ================= Prediction Form ================= -->
+
+    <form action="/predict" method="POST">
+
+        <div class="form-group">
+
+            <label>Age</label>
+
+            <input
+                type="number"
+                name="Age"
+                placeholder="Enter Age"
+                required>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Business Travel</label>
+
+            <select name="BusinessTravel">
+
+                <option value="Travel_Rarely">Travel Rarely</option>
+
+                <option value="Travel_Frequently">Travel Frequently</option>
+
+                <option value="Non-Travel">Non Travel</option>
+
+            </select>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Department</label>
+
+            <select name="Department">
+
+                <option value="Sales">Sales</option>
+
+                <option value="Research & Development">Research & Development</option>
+
+                <option value="Human Resources">Human Resources</option>
+
+            </select>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Distance From Home</label>
+
+            <input
+                type="number"
+                name="DistanceFromHome"
+                placeholder="Distance"
+                required>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Environment Satisfaction</label>
+
+            <select name="EnvironmentSatisfaction">
+
+                <option value="1">1 - Low</option>
+
+                <option value="2">2</option>
+
+                <option value="3">3</option>
+
+                <option value="4">4 - High</option>
+
+            </select>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Job Role</label>
+
+            <select name="JobRole">
+
+                <option value="Sales Executive">Sales Executive</option>
+
+                <option value="Research Scientist">Research Scientist</option>
+
+                <option value="Laboratory Technician">Laboratory Technician</option>
+
+                <option value="Manufacturing Director">Manufacturing Director</option>
+
+                <option value="Healthcare Representative">Healthcare Representative</option>
+
+                <option value="Manager">Manager</option>
+
+                <option value="Sales Representative">Sales Representative</option>
+
+                <option value="Research Director">Research Director</option>
+
+                <option value="Human Resources">Human Resources</option>
+
+            </select>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Job Satisfaction</label>
+
+            <select name="JobSatisfaction">
+
+                <option value="1">1</option>
+
+                <option value="2">2</option>
+
+                <option value="3">3</option>
+
+                <option value="4">4</option>
+
+            </select>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Monthly Income</label>
+
+            <input
+                type="number"
+                name="MonthlyIncome"
+                placeholder="Monthly Income"
+                required>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Over Time</label>
+
+            <select name="OverTime">
+
+                <option value="Yes">Yes</option>
+
+                <option value="No">No</option>
+
+            </select>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Total Working Years</label>
+
+            <input
+                type="number"
+                name="TotalWorkingYears"
+                placeholder="Total Working Years"
+                required>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Work Life Balance</label>
+
+            <select name="WorkLifeBalance">
+
+                <option value="1">1</option>
+
+                <option value="2">2</option>
+
+                <option value="3">3</option>
+
+                <option value="4">4</option>
+
+            </select>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Years At Company</label>
+
+            <input
+                type="number"
+                name="YearsAtCompany"
+                placeholder="Years At Company"
+                required>
+
+        </div>
+
+        <button type="submit">
+
+            Predict Attrition
+
+        </button>
+
+    </form>
+
+    <hr style="margin:50px 0;">
+
+    <h2 style="text-align:center;color:#1f4e79;">
+
+        HR Analytics Dashboard
+
+    </h2>
+
+    <div class="charts">
+                <div class="chart">
+
+            <h3>Attrition Distribution</h3>
+
+            <img src="{{ url_for('static', filename='images/attrition_distribution.png') }}"
+                 alt="Attrition Distribution">
+
+        </div>
+
+        <div class="chart">
+
+            <h3>Department Wise Attrition</h3>
+
+            <img src="{{ url_for('static', filename='images/department_attrition.png') }}"
+                 alt="Department Wise Attrition">
+
+        </div>
+
+        <div class="chart">
+
+            <h3>Gender Distribution</h3>
+
+            <img src="{{ url_for('static', filename='images/gender_distribution.png') }}"
+                 alt="Gender Distribution">
+
+        </div>
+
+        <div class="chart">
+
+            <h3>Monthly Income Distribution</h3>
+
+            <img src="{{ url_for('static', filename='images/monthly_income.png') }}"
+                 alt="Monthly Income Distribution">
+
+        </div>
+
+        <div class="chart">
+
+            <h3>Age Distribution</h3>
+
+            <img src="{{ url_for('static', filename='images/age_distribution.png') }}"
+                 alt="Age Distribution">
+
+        </div>
+
+        <div class="chart">
+
+            <h3>OverTime vs Attrition</h3>
+
+            <img src="{{ url_for('static', filename='images/overtime_attrition.png') }}"
+                 alt="OverTime vs Attrition">
+
+        </div>
+
+        <div class="chart">
+
+            <h3>Job Satisfaction</h3>
+
+            <img src="{{ url_for('static', filename='images/job_satisfaction.png') }}"
+                 alt="Job Satisfaction">
+
+        </div>
+
+        <div class="chart">
+
+            <h3>Correlation Heatmap</h3>
+
+            <img src="{{ url_for('static', filename='images/correlation_heatmap.png') }}"
+                 alt="Correlation Heatmap">
+
+        </div>
+
+    </div>
+
+    <footer style="margin-top:50px;text-align:center;color:#666;">
+
+        <hr style="margin-bottom:20px;">
+
+        <p>
+            Employee Attrition Prediction System
+        </p>
+
+        <p>
+            Built with Python, Flask, Scikit-learn, Pandas, HTML, CSS & JavaScript
+        </p>
+
+        <p>
+            IBM HR Analytics Dataset
+        </p>
+
+    </footer>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+
+</html>
